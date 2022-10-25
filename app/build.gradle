@@ -29,6 +29,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    // add this to utilize view binding -- recommended by Google
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {

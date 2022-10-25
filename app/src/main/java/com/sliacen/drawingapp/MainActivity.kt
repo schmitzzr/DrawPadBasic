@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
+import com.sliacen.drawingapp.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private var drawingView: DrawingView? = null
     private var mImageButtonCurrentPaint: ImageButton? = null
     var customProgressDialog: Dialog? = null
+    private var binding : ActivityMainBinding? = null
 
     private val openGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -71,7 +73,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
         drawingView = findViewById(R.id.drawing_view)
         drawingView?.setSizeForBrush(20.toFloat())
 
@@ -82,28 +85,28 @@ class MainActivity : AppCompatActivity() {
             ContextCompat.getDrawable(this, R.drawable.pallet_selected)
         )
 
-        val ibBrush : ImageButton = findViewById(R.id.ib_brush)
-        ibBrush.setOnClickListener {
+        //val ibBrush : ImageButton = findViewById(R.id.ib_brush)
+        binding?.ibBrush?.setOnClickListener {
             showBrushSizeChoiceDialog()
         }
 
-        val ibUndo : ImageButton = findViewById(R.id.ib_undo)
-        ibUndo.setOnClickListener {
+        //val ibUndo : ImageButton = findViewById(R.id.ib_undo)
+        binding?.ibUndo?.setOnClickListener {
             drawingView?.onClickUndo()
         }
 
-        val ibRedo : ImageButton = findViewById(R.id.ib_redo)
-        ibRedo.setOnClickListener {
+        //val ibRedo : ImageButton = findViewById(R.id.ib_redo)
+        binding?.ibRedo?.setOnClickListener {
             drawingView?.onClickRedo()
         }
 
-        val ibGallery : ImageButton = findViewById(R.id.ib_gallery)
-        ibGallery.setOnClickListener {
+        //val ibGallery : ImageButton = findViewById(R.id.ib_gallery)
+        binding?.ibGallery?.setOnClickListener {
             requestStoragePermission()
         }
 
-        val ibSave : ImageButton = findViewById(R.id.ib_save)
-        ibSave.setOnClickListener {
+        //val ibSave : ImageButton = findViewById(R.id.ib_save)
+        binding?.ibSave?.setOnClickListener {
             if (isReadStorageAllowed()) {
                 showProgressDialog()
                 lifecycleScope.launch {
